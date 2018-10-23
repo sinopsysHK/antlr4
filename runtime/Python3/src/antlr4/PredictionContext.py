@@ -138,6 +138,8 @@ class SingletonPredictionContext(PredictionContext):
             return False
         elif not isinstance(other, SingletonPredictionContext):
             return False
+        elif hash(self) != hash(other):
+            return False # can't be same if hash is different
         else:
             return self.returnState == other.returnState and self.parentCtx == other.parentCtx
 
@@ -202,6 +204,8 @@ class ArrayPredictionContext(PredictionContext):
     def __eq__(self, other):
         if self is other:
             return True
+        elif other is None:
+            return False
         elif not isinstance(other, ArrayPredictionContext):
             return False
         elif hash(self) != hash(other):
